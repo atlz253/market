@@ -1,36 +1,31 @@
 import {
   AppRoot,
-  Group,
-  Header,
   Panel,
   PanelHeader,
-  SimpleCell,
   SplitCol,
   SplitLayout,
   View,
   usePlatform,
 } from "@vkontakte/vkui";
-import { useProducts } from "./hooks/useProducts";
+import CartProducts from "./components/CartProducts";
+import { useOnResizeDeviceDetection } from "./hooks/useDevice";
 
 function App() {
   const platform = usePlatform();
-  const cartID = 1;
-  const products = useProducts(cartID);
+
+  useOnResizeDeviceDetection();
 
   return (
     <AppRoot>
       <SplitLayout
         header={platform !== "vkcom" && <PanelHeader delimiter="none" />}
+        style={{justifyContent: "center"}}
       >
-        <SplitCol autoSpaced>
+        <SplitCol autoSpaced maxWidth={1440}>
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>
-              <Group header={<Header mode="secondary">Products</Header>}>
-                {products.map(({ id, title }) => (
-                  <SimpleCell key={id}>{title}</SimpleCell>
-                ))}
-              </Group>
+              <CartProducts />
             </Panel>
           </View>
         </SplitCol>
