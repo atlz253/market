@@ -1,6 +1,5 @@
 import { Card, Headline, Image, Paragraph, Title } from "@vkontakte/vkui";
 import { CSSProperties, createRef } from "react";
-import { CardResizeObserver, useCardResizeEffect } from "../hooks/useProductsIDs";
 import { useDeviceInfo } from "../hooks/useDevice";
 import { Device } from "../state/UI/types";
 
@@ -10,23 +9,17 @@ import { useSelector } from "react-redux";
 
 interface CartProductProps {
   productID: number;
-  cardResizeObserver: CardResizeObserver;
 }
 
-function CartProduct({ productID, cardResizeObserver }: CartProductProps) {
+function CartProduct({ productID }: CartProductProps) {
   const { id, thumbnail, title, price } = useSelector(
     cartSelectors.product(productID)
   );
   const rootRef = createRef<HTMLDivElement>();
   const device = useDeviceInfo();
 
-  useCardResizeEffect(rootRef, cardResizeObserver);
-
   return (
-    <Card
-      getRootRef={rootRef}
-      style={{ backgroundColor: "transparent", position: "relative" }}
-    >
+    <Card getRootRef={rootRef} style={getCardStyle(device)}>
       <Image src={thumbnail} style={getImageStyle(device)} />
       <Paragraph style={getParagraphStyle(device)}>{price}₽</Paragraph>
       <Title style={getTitleStyle(device)} level="3">
@@ -41,8 +34,24 @@ function CartProduct({ productID, cardResizeObserver }: CartProductProps) {
   );
 }
 
+function getCardStyle(device: Device): CSSProperties {
+  const defaultStyles: CSSProperties = {
+    backgroundColor: "transparent",
+    position: "relative",
+    height: "200px"
+  };
+
+  switch (device) {
+    case "desktop":
+    case "tablet":
+      return { ...defaultStyles, height: "300px" };
+    default:
+      return defaultStyles;
+  }
+}
+
 function getImageStyle(device: Device): CSSProperties {
-  const defaultStyles: CSSProperties = { width: "100%", height: "40%" };
+  const defaultStyles: CSSProperties = { width: "100%", height: "70%" };
 
   switch (device) {
     case "desktop":
