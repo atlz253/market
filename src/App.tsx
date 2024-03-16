@@ -6,7 +6,6 @@ import {
   PanelHeader,
   SplitCol,
   SplitLayout,
-  View,
   useAdaptivityConditionalRender,
   usePlatform,
 } from "@vkontakte/vkui";

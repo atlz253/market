@@ -1,20 +1,22 @@
 import { CardGrid } from "@vkontakte/vkui";
-import { useCardsResizeObserverRef, useProducts } from "../hooks/useProducts";
+import {
+  useCardsResizeObserverRef,
+  useProductsIDs,
+} from "../hooks/useProductsIDs";
 import CartProduct from "./CartProduct";
-import { Product } from "../cart/types";
 
 function CartProducts() {
   const cartID = 1;
-  const products = useProducts(cartID);
+  const products = useProductsIDs(cartID);
   const cardsResizeObserver = useCardsResizeObserverRef();
 
   return <CardGrid size="l">{createProductsCards(products)}</CardGrid>;
 
-  function createProductsCards(products: Product[]) {
-    return products.map((product) => (
+  function createProductsCards(products: number[]) {
+    return products.map((id) => (
       <CartProduct
-        key={product.id}
-        product={product}
+        key={id}
+        productID={id}
         cardResizeObserver={cardsResizeObserver.current}
       />
     ));

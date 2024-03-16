@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Product } from "../cart/types";
 import { RefObject, useEffect, useRef } from "react";
 import { getProductsByCartID } from "../cart/cart";
 import { setProducts } from "../state/cart/slice";
 import { cartSelectors } from "../state/cart/selectors";
 
-export function useProducts(id: number): Product[] {
-  const products = useSelector(cartSelectors.products);
+export function useProductsIDs(id: number): number[] {
+  const products = useSelector(cartSelectors.productsIDs);
   const dispatch = useDispatch();
 
   useEffect(() => {

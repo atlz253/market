@@ -1,19 +1,22 @@
 import { Card, Headline, Image, Paragraph, Title } from "@vkontakte/vkui";
-import { Product } from "../cart/types";
 import { CSSProperties, createRef } from "react";
-import { CardResizeObserver, useCardResizeEffect } from "../hooks/useProducts";
+import { CardResizeObserver, useCardResizeEffect } from "../hooks/useProductsIDs";
 import { useDeviceInfo } from "../hooks/useDevice";
 import { Device } from "../state/UI/types";
 
 import CartProductButtonGroup from "./CartProductButtonGroup";
+import { cartSelectors } from "../state/cart/selectors";
+import { useSelector } from "react-redux";
 
 interface CartProductProps {
-  product: Product;
+  productID: number;
   cardResizeObserver: CardResizeObserver;
 }
 
-function CartProduct({ product, cardResizeObserver }: CartProductProps) {
-  const { thumbnail, title, price } = product;
+function CartProduct({ productID, cardResizeObserver }: CartProductProps) {
+  const { id, thumbnail, title, price } = useSelector(
+    cartSelectors.product(productID)
+  );
   const rootRef = createRef<HTMLDivElement>();
   const device = useDeviceInfo();
 
@@ -33,7 +36,7 @@ function CartProduct({ product, cardResizeObserver }: CartProductProps) {
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. quidem
         laborum!
       </Headline>
-      <CartProductButtonGroup />
+      <CartProductButtonGroup productID={id} />
     </Card>
   );
 }

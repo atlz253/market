@@ -1,5 +1,7 @@
-import { Product } from "../../cart/types"
+import { Product } from "../../cart/types";
 
 export type CartState = {
-  products: Product[]
-}
+  productsIDs: number[];
+  products: Product[];
+  productsQuantity: Record<number, number>;
+};

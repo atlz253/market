@@ -7,17 +7,31 @@ import { ButtonGroup, IconButton, Text } from "@vkontakte/vkui";
 import { useDeviceInfo } from "../hooks/useDevice";
 import { Device } from "../state/UI/types";
 import { CSSProperties } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decrementProductQuantity,
+  incrementProductQuantity,
+} from "../state/cart/slice";
+import { cartSelectors } from "../state/cart/selectors";
 
 const ICON_SIZE = 16;
 
-function CartProductButtonGroup() {
+interface CartProductButtonGroupProps {
+  productID: number;
+}
+
+function CartProductButtonGroup({ productID }: CartProductButtonGroupProps) {
+  const quantity = useSelector(cartSelectors.productQuantity(productID));
   const device = useDeviceInfo();
+  const dispatch = useDispatch();
 
   return (
     <ButtonGroup style={getButtonGroupStyle(device)}>
       <IconButton
         label="Увеличить количество"
         style={getQuantityButtonStyle(device)}
+        onClick={() => dispatch(incrementProductQuantity(productID))}
+        disabled={quantity === 10}
       >
         <Icon24Add
           width={ICON_SIZE}
@@ -25,10 +39,12 @@ function CartProductButtonGroup() {
           style={getIconStyle()}
         />
       </IconButton>
-      <Text style={getTextStyle(device)}>{0}</Text>
+      <Text style={getTextStyle(device)}>{quantity}</Text>
       <IconButton
         label="Уменьшить количество"
         style={getQuantityButtonStyle(device)}
+        onClick={() => dispatch(decrementProductQuantity(productID))}
+        disabled={quantity === 1}
       >
         <Icon24MinusOutline
           width={ICON_SIZE}
@@ -102,7 +118,7 @@ function getButtonGroupStyle(device: Device): CSSProperties {
       };
     default:
       return {
-        marginTop: "8px"
+        marginTop: "8px",
       };
   }
 }
