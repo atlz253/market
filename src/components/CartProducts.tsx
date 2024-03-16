@@ -4,9 +4,11 @@ import {
   useProductsIDs,
 } from "../hooks/useProductsIDs";
 import CartProduct from "./CartProduct";
+import { useSelector } from "react-redux";
+import { cartSelectors } from "../state/cart/selectors";
 
 function CartProducts() {
-  const cartID = 1;
+  const cartID = useSelector(cartSelectors.cartID);
   const products = useProductsIDs(cartID);
   const cardsResizeObserver = useCardsResizeObserverRef();
 

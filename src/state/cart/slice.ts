@@ -4,6 +4,7 @@ import { Product } from "../../cart/types";
 import { default as errorMessages } from "./errorMessages";
 
 export const initialState: CartState = {
+  cartID: 1,
   products: [],
   productsIDs: [],
   productsQuantity: {},
