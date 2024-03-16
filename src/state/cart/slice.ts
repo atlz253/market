@@ -7,7 +7,7 @@ export const initialState: CartState = {
 } as const;
 
 const cartSlice = createSlice({
-  name: `${createSlice}`,
+  name: 'cart',
   initialState,
   reducers: {
     setProducts: (state, { payload }: PayloadAction<Product[]>) => {
