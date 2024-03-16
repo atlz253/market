@@ -10,6 +10,7 @@ import { CSSProperties } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   decrementProductQuantity,
+  deleteProduct,
   incrementProductQuantity,
 } from "../state/cart/slice";
 import { cartSelectors } from "../state/cart/selectors";
@@ -55,6 +56,7 @@ function CartProductButtonGroup({ productID }: CartProductButtonGroupProps) {
       <IconButton
         label="Удалить товар из корзины"
         style={getTrashButtonStyle(device)}
+        onClick={() => dispatch(deleteProduct(productID))}
       >
         <Icon24TrashSimpleOutline
           width={ICON_SIZE}

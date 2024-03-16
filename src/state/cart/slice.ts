@@ -23,6 +23,11 @@ const cartSlice = createSlice({
       state.products = payload;
       state.productsIDs = payload.map((product) => product.id);
     },
+    deleteProduct: (state, { payload }: PayloadAction<number>) => {
+      state.productsIDs = state.productsIDs.filter((id) => id !== payload);
+      state.products = state.products.filter(({ id }) => id !== payload);
+      delete state.productsQuantity[payload];
+    },
     incrementProductQuantity: (state, { payload }: PayloadAction<number>) => {
       if (state.productsQuantity[payload] === undefined) {
         throw new Error(errorMessages.productWIthIDNotFound(payload));
@@ -44,6 +49,7 @@ const cartReducer = cartSlice.reducer;
 
 export const {
   setProducts,
+  deleteProduct,
   incrementProductQuantity,
   decrementProductQuantity,
 } = cartSlice.actions;
