@@ -6,7 +6,6 @@ import {
   PanelHeader,
   SplitCol,
   SplitLayout,
-  useAdaptivityConditionalRender,
   usePlatform,
 } from "@vkontakte/vkui";
 import CartProducts from "./components/CartProducts";
@@ -20,9 +19,6 @@ const CartHeader = <Header mode="secondary">Корзина</Header>;
 function App() {
   const platform = usePlatform();
   const device = useDeviceInfo();
-  const { viewWidth } = useAdaptivityConditionalRender() as {
-    viewWidth: { tabletPlus: { className: string } }; // FIXME: В документации VKUI это работало без таких хаков
-  };
 
   useOnResizeDeviceDetection();
 
@@ -37,21 +33,20 @@ function App() {
             <PanelHeader>VKUI</PanelHeader>
             <Group header={CartHeader}>
               <CartProducts />
+              {device === 'mobile' && <CartTotal />}
             </Group>
           </Panel>
         </SplitCol>
-        <SplitCol
-          autoSpaced
-          maxWidth={360}
-          className={viewWidth.tabletPlus.className}
-        >
-          <Panel>
-            <PanelHeader />
-            <Group>
-              <CartTotal />
-            </Group>
-          </Panel>
-        </SplitCol>
+        {device !== "mobile" && (
+          <SplitCol autoSpaced maxWidth={360}>
+            <Panel>
+              <PanelHeader />
+              <Group>
+                <CartTotal />
+              </Group>
+            </Panel>
+          </SplitCol>
+        )}
       </SplitLayout>
     </AppRoot>
   );
@@ -59,6 +54,7 @@ function App() {
 
 function getLeftColStyle(device: Device): CSSProperties {
   switch (device) {
+    case "tablet":
     case "desktop":
       return {
         marginRight: "0",

@@ -38,7 +38,7 @@ function getCardStyle(device: Device): CSSProperties {
   const defaultStyles: CSSProperties = {
     backgroundColor: "transparent",
     position: "relative",
-    height: "200px"
+    height: "200px",
   };
 
   switch (device) {
@@ -58,7 +58,7 @@ function getImageStyle(device: Device): CSSProperties {
     case "tablet":
       return {
         ...defaultStyles,
-        height: "60%",
+        height: "50%",
       };
     default:
       return defaultStyles;
@@ -94,17 +94,29 @@ function getTitleStyle(device: Device): CSSProperties {
 }
 
 function getHeadLineStyle(device: Device): CSSProperties {
+  const defaultStyles: CSSProperties = {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  };
+
   switch (device) {
-    case "mobile":
+    case "desktop":
       return {
+        ...defaultStyles,
+        maxHeight: "60px",
+      };
+    case "tablet":
+      return {
+        ...defaultStyles,
+        maxHeight: "37px"
+      }
+    default:
+      return {
+        ...defaultStyles,
         fontSize: "12px",
         lineHeight: "1.3",
         textWrap: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
       };
-    default:
-      return {};
   }
 }
 
