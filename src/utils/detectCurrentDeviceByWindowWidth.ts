@@ -1,7 +1,7 @@
 import { Device } from "../state/UI/types";
 
 function detectCurrentDeviceByWindowWidth(): Device {
-  const width = window.screen.availWidth;
+  const width = document.documentElement.scrollWidth;
 
   if (width >= 993) {
     return "desktop";

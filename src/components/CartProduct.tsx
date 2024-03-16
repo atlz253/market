@@ -43,10 +43,6 @@ function getImageStyle(device: Device): CSSProperties {
 
   switch (device) {
     case "desktop":
-      return {
-        ...defaultStyles,
-        height: "70%",
-      };
     case "tablet":
       return {
         ...defaultStyles,
