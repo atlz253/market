@@ -10,14 +10,12 @@ import {
   View,
   usePlatform,
 } from "@vkontakte/vkui";
-import { useDispatch, useSelector } from "react-redux";
-import { State } from "./state/store";
-import { decrement, increment } from "./state/cartSlice";
+import { useProducts } from "./hooks/useProducts";
 
 function App() {
   const platform = usePlatform();
-  const count = useSelector((state: State) => state.cart.value);
-  const dispatch = useDispatch();
+  const cartID = 1;
+  const products = useProducts(cartID);
 
   return (
     <AppRoot>
@@ -28,27 +26,10 @@ function App() {
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>
-              <Group header={<Header mode="secondary">Items</Header>}>
-                <SimpleCell>
-                  <div>
-                    <div>
-                      <button
-                        aria-label="Increment value"
-                        onClick={() => dispatch(increment())}
-                      >
-                        Increment
-                      </button>
-                      <span>{count}</span>
-                      <button
-                        aria-label="Decrement value"
-                        onClick={() => dispatch(decrement())}
-                      >
-                        Decrement
-                      </button>
-                    </div>
-                  </div>
-                </SimpleCell>
-                <SimpleCell>World</SimpleCell>
+              <Group header={<Header mode="secondary">Products</Header>}>
+                {products.map(({ id, title }) => (
+                  <SimpleCell key={id}>{title}</SimpleCell>
+                ))}
               </Group>
             </Panel>
           </View>

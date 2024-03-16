@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./cartSlice";
+import cartReducer from "./cart/slice";
 
 export const store = configureStore({
   reducer: {
@@ -7,5 +7,5 @@ export const store = configureStore({
   },
 });
 
-export type State = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ReturnType<typeof store.dispatch>;
